@@ -1,0 +1,91 @@
+{
+  "name": "quality_optimization_workflow",
+  "description": "图像质量优化工作流",
+  "steps": {
+    "step_1": {
+      "step_type": "quality_assessment",
+      "parameters": {
+        "metrics": [
+          "contrast",
+          "brightness",
+          "sharpness",
+          "noise_level",
+          "snr"
+        ]
+      },
+      "conditions": {
+        "contrast_check": {
+          "threshold": 0.7,
+          "next_step": "contrast_enhancement"
+        },
+        "brightness_check": {
+          "threshold": 0.7,
+          "next_step": "brightness_adjustment"
+        },
+        "sharpness_check": {
+          "threshold": 0.7,
+          "next_step": "sharpness_enhancement"
+        },
+        "noise_check": {
+          "threshold": 0.3,
+          "next_step": "noise_reduction"
+        }
+      },
+      "next_steps": [
+        "enhancement_selection"
+      ],
+      "created_at": "2025-05-22T12:58:52.290393"
+    },
+    "step_2": {
+      "step_type": "enhancement_selection",
+      "parameters": {
+        "methods": {
+          "contrast_enhancement": {
+            "clahe_clip_limit": 2.0,
+            "clahe_grid_size": [
+              8,
+              8
+            ]
+          },
+          "brightness_adjustment": {
+            "gamma": 1.0,
+            "brightness_offset": 10
+          },
+          "sharpness_enhancement": {
+            "kernel_size": 3,
+            "sigma": 1.0
+          },
+          "noise_reduction": {
+            "method": "non_local_means",
+            "h": 10,
+            "template_window_size": 7,
+            "search_window_size": 21
+          }
+        }
+      },
+      "conditions": {},
+      "next_steps": [
+        "final_assessment"
+      ],
+      "created_at": "2025-05-22T12:58:52.290393"
+    },
+    "step_3": {
+      "step_type": "final_assessment",
+      "parameters": {
+        "metrics": [
+          "contrast",
+          "brightness",
+          "sharpness",
+          "noise_level",
+          "snr"
+        ],
+        "min_improvement": 0.2
+      },
+      "conditions": {},
+      "next_steps": [],
+      "created_at": "2025-05-22T12:58:52.290393"
+    }
+  },
+  "start_step": "step_1",
+  "created_at": "2025-05-22T12:58:52.290393"
+}

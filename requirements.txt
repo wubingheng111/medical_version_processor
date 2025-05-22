@@ -1,0 +1,45 @@
+# Web界面框架
+streamlit==1.32.0
+gradio>=4.19.0
+
+# 图像处理
+opencv-python==4.8.1.78
+scikit-image==0.21.0
+Pillow==10.0.0
+SimpleITK>=2.3.0
+pydicom>=2.4.0
+PyWavelets>=1.4.0  # 用于小波变换去噪
+
+# 数据处理和可视化
+numpy==1.24.3
+pandas==2.0.3
+plotly>=5.18.0
+
+# 文档处理
+python-docx>=0.8.11  # 用于生成Word文档报告
+reportlab>=4.0.0  # 用于PDF生成
+
+# 3D可视化
+vtk>=9.3.0
+pyvista>=0.43.0
+
+# 医学影像AI模型
+monai>=1.3.0
+ultralytics>=8.1.0  # YOLOv8
+mmsegmentation>=1.2.2
+
+# AI分析
+zhipuai>=1.0.7
+
+# 工具库
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+pytest>=8.0.0  # 用于测试
+matplotlib==3.7.2
+scipy>=1.11.0
+scikit-learn>=1.3.0
+requests>=2.31.0
+
+# 新增包
+torch==2.2.0
+transformers==4.37.2 

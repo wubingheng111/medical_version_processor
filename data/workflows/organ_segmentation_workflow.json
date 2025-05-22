@@ -1,0 +1,77 @@
+{
+  "name": "organ_segmentation_workflow",
+  "description": "器官分割标准工作流",
+  "steps": {
+    "step_1": {
+      "step_type": "image_preprocessing",
+      "parameters": {
+        "operations": [
+          "grayscale",
+          "normalize"
+        ],
+        "quality_threshold": 0.7
+      },
+      "conditions": {},
+      "next_steps": [
+        "enhancement"
+      ],
+      "created_at": "2025-05-22T13:09:49.469956"
+    },
+    "step_2": {
+      "step_type": "image_enhancement",
+      "parameters": {
+        "contrast": 1.1,
+        "brightness": 0,
+        "gamma": 1.0
+      },
+      "conditions": {},
+      "next_steps": [
+        "segmentation"
+      ],
+      "created_at": "2025-05-22T13:09:49.469956"
+    },
+    "step_3": {
+      "step_type": "image_segmentation",
+      "parameters": {
+        "method": "watershed",
+        "marker_threshold": 0.3
+      },
+      "conditions": {},
+      "next_steps": [
+        "organ_detection"
+      ],
+      "created_at": "2025-05-22T13:09:49.469956"
+    },
+    "step_4": {
+      "step_type": "organ_detection",
+      "parameters": {
+        "target_organs": [
+          "liver",
+          "kidney",
+          "spleen"
+        ],
+        "confidence_threshold": 0.5
+      },
+      "conditions": {},
+      "next_steps": [
+        "measurement"
+      ],
+      "created_at": "2025-05-22T13:09:49.469956"
+    },
+    "step_5": {
+      "step_type": "measurement",
+      "parameters": {
+        "metrics": [
+          "volume",
+          "density",
+          "shape_index"
+        ]
+      },
+      "conditions": {},
+      "next_steps": [],
+      "created_at": "2025-05-22T13:09:49.469956"
+    }
+  },
+  "start_step": "step_1",
+  "created_at": "2025-05-22T13:09:49.469956"
+}
