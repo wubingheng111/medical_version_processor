@@ -23,7 +23,7 @@ from utils.smart_workflow import SmartWorkflowSystem
 
 # 设置页面配置
 st.set_page_config(
-    page_title="MedVision Pro - 智能医学影像分析平台",
+    page_title="🏥 MedVision Pro - 智能医学影像分析平台",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -32,396 +32,108 @@ st.set_page_config(
 # 自定义CSS样式
 st.markdown("""
     <style>
-    /* 全局样式 */
-    .main {
-        padding: 0rem 1rem;
-        background-color: #1a1a1a;
-        color: #e0e0e0;
-    }
-    
-    /* 覆盖Streamlit默认样式 */
+    /* 页面背景 */
     .stApp {
-        background-color: #1a1a1a;
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d3748 100%);
+        background-image: 
+            linear-gradient(135deg, rgba(26, 26, 26, 0.97) 0%, rgba(45, 55, 72, 0.97) 100%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234299e1' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
-    
-    .stMarkdown {
-        color: #e0e0e0;
-    }
-    
-    /* 标题样式 */
-    .main-title {
-        color: #ffffff;
-        text-align: center;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        background: linear-gradient(120deg, #2c5282, #1a365d);
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* 卡片样式 */
-    .stCard {
-        background-color: #2d3748;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        margin-bottom: 1rem;
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
-    }
-    
-    /* 按钮样式 */
-    .stButton>button {
-        width: 100%;
-        border-radius: 5px;
-        background: linear-gradient(45deg, #2c5282, #1a365d);
-        color: white;
-        border: 1px solid #4a5568;
-        padding: 0.5rem 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        background: linear-gradient(45deg, #3182ce, #2c5282);
-    }
-    
-    /* 图像容器样式 */
-    .image-container {
-        background: #2d3748;
-        padding: 1rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        border: 1px solid #4a5568;
-    }
-    
-    .image-container h3 {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 分析结果样式 */
-    .analysis-section {
-        background: #2d3748;
-        padding: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        margin: 1rem 0;
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
-    }
-    
-    .analysis-header {
-        color: #90cdf4;
-        border-bottom: 2px solid #4299e1;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    /* 滑块样式 */
-    .stSlider {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-        color: #e0e0e0;
-    }
-    
-    .stSlider > div > div > div {
-        background-color: #4299e1;
-    }
-    
-    /* 对比视图样式 */
-    .comparison-slider {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        background: #2d3748;
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
-    }
-    
-    /* 预设卡片样式 */
-    .preset-card {
-        padding: 1.5rem;
-        border-radius: 10px;
-        border: 1px solid #4a5568;
-        margin-bottom: 1rem;
-        background: #2d3748;
-        transition: all 0.3s ease;
-        color: #e0e0e0;
-    }
-    
-    .preset-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        background: #3d4a5f;
-    }
-    
-    /* AI分析部分样式 */
-    .ai-analysis-section {
-        text-align: center;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 2rem;
-        background: #2d3748;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
-    }
-    
-    /* 进度条样式 */
-    .stProgress > div > div {
-        background-color: #4299e1;
-    }
-    
-    /* 标签页样式 */
-    .stTabs {
-        background: #2d3748;
-        padding: 1rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
-    }
-    
+
     /* 侧边栏样式 */
     .css-1d391kg {
-        background-color: #1a1a1a;
-        color: #e0e0e0;
+        background: linear-gradient(180deg, rgba(26, 32, 44, 0.95) 0%, rgba(45, 55, 72, 0.95) 100%);
+        backdrop-filter: blur(10px);
     }
-    
-    .css-1d391kg .stSelectbox label {
-        color: #e0e0e0;
+
+    /* 主标题样式 */
+    .main-title {
+        background: linear-gradient(120deg, rgba(44, 82, 130, 0.92), rgba(26, 54, 93, 0.92));
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem 0;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
     }
-    
-    /* 文本输入框样式 */
-    .stTextInput>div>div {
-        background-color: #2d3748;
-        color: #e0e0e0;
-        border: 1px solid #4a5568;
+
+    .main-title h1 {
+        color: #fff;
+        margin: 0;
+        font-size: 2.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(120deg, #ffffff, #90cdf4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
-    
+
+    .main-title p {
+        color: #e2e8f0;
+        margin-top: 0.5rem;
+        font-size: 1.1rem;
+        opacity: 0.9;
+    }
+
+    /* 卡片容器样式 */
+    .stCard {
+        background: linear-gradient(145deg, rgba(45, 55, 72, 0.8), rgba(26, 32, 44, 0.8));
+        border-radius: 10px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 按钮样式 */
+    .stButton>button {
+        background: linear-gradient(45deg, #3182ce, #2c5282);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .stButton>button:hover {
+        background: linear-gradient(45deg, #4299e1, #3182ce);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* 输入框样式 */
+    .stTextInput>div>div>input {
+        background: rgba(45, 55, 72, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 8px;
+    }
+
     /* 选择框样式 */
     .stSelectbox>div>div {
-        background-color: #2d3748;
-        color: #e0e0e0;
-        border: 1px solid #4a5568;
+        background: rgba(45, 55, 72, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 8px;
     }
-    
-    /* 复选框样式 */
-    .stCheckbox>div>div>div {
-        background-color: #2d3748;
-        border: 1px solid #4a5568;
-        color: #e0e0e0;
+
+    /* 滑块样式 */
+    .stSlider>div>div>div {
+        background: linear-gradient(90deg, #3182ce, #2c5282);
     }
-    
-    /* 展开器样式 */
-    .streamlit-expanderHeader {
-        background-color: #2d3748;
-        color: #e0e0e0;
-        border: 1px solid #4a5568;
+
+    /* 动画效果 */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-    
-    .streamlit-expanderContent {
-        background-color: #2d3748;
-        color: #e0e0e0;
-        border: 1px solid #4a5568;
-    }
-    
-    /* 链接样式 */
-    a {
-        color: #4299e1;
-        text-decoration: none;
-    }
-    
-    a:hover {
-        color: #90cdf4;
-        text-decoration: underline;
-    }
-    
-    /* 错误信息样式 */
-    .stAlert {
-        background-color: #2d3748;
-        color: #e0e0e0;
-        border: 1px solid #4a5568;
-    }
-    
-    /* 提示信息样式 */
-    .stInfo {
-        background-color: #2c5282;
-        color: #e0e0e0;
-        border: 1px solid #4299e1;
-    }
-    
-    /* 成功信息样式 */
-    .stSuccess {
-        background-color: #276749;
-        color: #e0e0e0;
-        border: 1px solid #48bb78;
-    }
-    
-    /* 警告信息样式 */
-    .stWarning {
-        background-color: #975a16;
-        color: #e0e0e0;
-        border: 1px solid #ed8936;
-    }
-    
-    /* 响应式布局 */
-    @media screen and (max-width: 768px) {
-        .main {
-            padding: 0.5rem;
-        }
-        
-        .stCard {
-            padding: 1rem;
-        }
-        
-        .analysis-section {
-            padding: 1rem;
-        }
-    }
-    
-    /* 上传区域样式 */
-    .uploadedFile {
-        background-color: transparent !important;
-        color: #e0e0e0 !important;
-        border: 2px dashed #4a5568 !important;
-        border-radius: 10px !important;
-        padding: 1rem !important;
-    }
-    
-    /* 文件上传按钮样式 */
-    .stFileUploader > div > div > button {
-        background: linear-gradient(45deg, #2c5282, #1a365d) !important;
-        color: #e0e0e0 !important;
-        border: 1px solid #4a5568 !important;
-        border-radius: 5px !important;
-        padding: 0.5rem 1rem !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    /* 文件上传按钮hover效果 */
-    .stFileUploader > div > div > button:hover {
-        background: linear-gradient(45deg, #3182ce, #2c5282) !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
-    }
-    
-    /* 文件上传区域hover效果 */
-    .stFileUploader > div:hover {
-        background-color: #3d4a5f !important;
-        border-color: #90cdf4 !important;
-    }
-    
-    /* 移除默认的白色背景 */
-    .stFileUploader > div {
-        background-color: transparent !important;
-        border: none !important;
-    }
-    
-    .stFileUploader > div > div {
-        background-color: transparent !important;
-    }
-    
-    /* 上传进度条样式 */
-    .stProgress > div > div {
-        background-color: #4299e1 !important;
-    }
-    
-    /* 文件名显示样式 */
-    .uploadedFileName {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 拖放提示文本样式 */
-    .stFileUploader > div::before {
-        content: "拖放文件到此处" !important;
-        color: #718096 !important;
-        font-size: 0.9em !important;
-        position: absolute !important;
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        pointer-events: none !important;
-        opacity: 0.7 !important;
-    }
-    
-    /* 上传区域激活状态样式 */
-    .stFileUploader > div.drag-active {
-        border-color: #90cdf4 !important;
-        background-color: rgba(66, 153, 225, 0.1) !important;
-    }
-    
-    /* 上传错误状态样式 */
-    .stFileUploader > div.has-error {
-        border-color: #fc8181 !important;
-    }
-    
-    /* 上传成功状态样式 */
-    .stFileUploader > div.is-success {
-        border-color: #48bb78 !important;
-    }
-    
-    /* 标题和文本样式 */
-    h1, h2, h3, h4, h5, h6, p, span, label, div {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 下拉菜单样式 */
-    .stSelectbox > div > div > div {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 输入框文本样式 */
-    .stTextInput input {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 滑块标签样式 */
-    .stSlider label {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 复选框标签样式 */
-    .stCheckbox label {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 分析结果文本样式 */
-    .analysis-content {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 历史记录样式 */
-    .history-section {
-        color: #e0e0e0 !important;
-    }
-    
-    /* 处理参数显示样式 */
-    .parameter-display {
-        color: #e0e0e0 !important;
-    }
-    
-    .processing-container {
-        display: flex;
-        align-items: stretch;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .processing-box {
-        flex: 1;
-        background-color: #2d3748;
-        padding: 1rem;
-        border-radius: 10px;
-        border: 1px solid #4a5568;
+
+    .main-title, .stCard {
+        animation: fadeIn 0.5s ease-out;
     }
     </style>
-    """, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 def load_presets():
     """加载预设参数"""
@@ -1129,7 +841,7 @@ def handle_single_mode(vlm_analyzer):
     with st.sidebar:
         st.markdown("""
             <div style='text-align: center; padding: 1rem;'>
-                <h2 style='color: white;'>MedVision Pro</h2>
+                <h2 style='color: white;'>🏥 MedVision Pro</h2>
                 <p style='color: #a8b9cc;'>智能医学影像分析平台</p>
             </div>
         """, unsafe_allow_html=True)
@@ -1201,9 +913,9 @@ def handle_single_mode(vlm_analyzer):
     
     # 主界面
     st.markdown("""
-        <div class='main-title'>
-            <h1>MedVision Pro</h1>
-            <p style='font-size: 1.2rem; opacity: 0.8;'>基于视觉语言模型的智能医学影像处理与分析系统</p>
+        <div style='text-align: center; padding: 2rem;'>
+            <h1 style='color: #4299e1; margin-bottom: 0.5rem; font-size: 2.5rem;'>🏥 MedVision Pro</h1>
+            <p style='color: #a0aec0; font-size: 1.2rem; margin: 0;'>基于视觉语言模型的智能医学影像处理与分析系统</p>
         </div>
     """, unsafe_allow_html=True)
     
@@ -1817,7 +1529,7 @@ def segmentation_options():
         )
         
         if method == "边缘检测":
-            edge_method = st.selectbox("选择边缘检测方法", ["canny", "sobel"])
+            edge_method = st.selectbox("选择边缘检测方法", ["canny", "sobel", "laplacian"])
             if st.button("执行边缘检测"):
                 processed = ImageProcessor.edge_detection(st.session_state.original_image, method=edge_method)
                 st.session_state.processed_image = processed

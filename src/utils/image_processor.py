@@ -135,6 +135,22 @@ class ImageProcessor:
             sobely = cv2.Sobel(gray, cv2.CV_64F, 0, 1, ksize=5)
             edges = cv2.magnitude(sobelx, sobely)
             edges = cv2.convertScaleAbs(edges)
+        elif method == "laplacian":
+            # 1. 先进行高斯模糊以减少噪声
+            blurred = cv2.GaussianBlur(gray, (3, 3), 0)
+            
+            # 2. 使用拉普拉斯算子
+            laplacian = cv2.Laplacian(blurred, cv2.CV_64F, ksize=3)
+            
+            # 3. 取绝对值并归一化
+            edges = np.uint8(np.absolute(laplacian))
+            
+            # 4. 应用阈值处理以突出显示边缘
+            _, edges = cv2.threshold(edges, 30, 255, cv2.THRESH_BINARY)
+            
+            # 5. 可选：进行形态学操作以细化边缘
+            kernel = np.ones((2,2), np.uint8)
+            edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
         
         return ImageProcessor._to_pil_image(cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR))
     

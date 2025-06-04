@@ -1,0 +1,16 @@
+[server]
+address = "0.0.0.0"
+port = 8502
+
+[browser]
+serverAddress = "0.0.0.0"
+serverPort = 8502
+
+[global]
+developmentMode = false
+
+[theme]
+primaryColor="#4299e1"
+backgroundColor="#1a1a1a"
+secondaryBackgroundColor="#2d3748"
+textColor="#ffffff" 
